@@ -3,6 +3,7 @@
 }
 
 body {
+    font-family: 'Sacramento', cursive;
     margin: 0;
     padding: 0;
 }
@@ -107,14 +108,13 @@ video {
 
 .material-icons {
     color: white;
-    font-size: 3rem;
     cursor: pointer;
 }
 
 .gallery {
     position: absolute;
-    bottom: 10rem;
-    right: 5.25rem;
+    bottom: 8rem;
+    right: 6.5rem;
 }
 
 .scale-capture {
