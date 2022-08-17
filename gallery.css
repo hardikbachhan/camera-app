@@ -1,0 +1,83 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Sacramento', cursive;
+    margin: 0;
+    padding: 0;
+    background-color: powderblue;
+}              
+
+h1 {
+    margin: 0;
+    text-align: center;
+    font-size: 3.5rem;
+    margin-top: 1.5rem;
+}
+
+.back {
+    width: 5rem;
+    height: 5rem;
+    font-size: 1.5rem;
+    background-color: #000;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 5rem;
+    right: 5rem;
+}
+
+.back:hover {
+    cursor: pointer;
+}
+
+.gallery-cont {
+    height: auto;
+    width: 100vw;
+}
+
+.media-cont {
+    height: 15rem;
+    width: 15rem;
+    background-color: aqua;
+    border: 2px solid #fff;
+    margin: 2rem;
+}
+
+.media {
+    height: calc(100% - 2rem - 2rem);
+}
+
+.media>* {
+    height: 100%;
+    width: 100%;
+}
+
+.action-btn {
+    height: 2rem;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.action-btn:hover {
+    cursor: pointer;
+}
+
+.download {
+    background-color: black;
+}
+
+.delete {
+    background-color: red;
+}
+
+
+::-webkit-scrollbar {
+    display: none;
+}

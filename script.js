@@ -1,10 +1,12 @@
-let recordBtn = document.querySelector(".record-btn");
-let recordBtnCont = document.querySelector(".record-btn-cont");
-let captureBtn = document.querySelector(".capture-btn");
-let captureBtnCont = document.querySelector(".capture-btn-cont");
-let timer = document.querySelector(".timer");
-let timerCont = document.querySelector(".timer-cont");
-let video = document.querySelector("video");
+let uid = new ShortUniqueId();
+const recordBtn = document.querySelector(".record-btn");
+const recordBtnCont = document.querySelector(".record-btn-cont");
+const captureBtn = document.querySelector(".capture-btn");
+const captureBtnCont = document.querySelector(".capture-btn-cont");
+const timer = document.querySelector(".timer");
+const timerCont = document.querySelector(".timer-cont");
+const video = document.querySelector("video");
+const gallery = document.querySelector(".gallery");
 let mediaRecorder;
 let constraints = {
     video: true,
@@ -12,7 +14,7 @@ let constraints = {
 };
 let filterColor = "transparent";
 
-// this wil store the video mediastream.
+// this will store the video mediastream.
 let chunks = [];
 navigator.mediaDevices.getUserMedia(constraints)
 .then ((stream) => {
@@ -34,10 +36,23 @@ navigator.mediaDevices.getUserMedia(constraints)
         let videoURL = URL.createObjectURL(blob);
         console.log(videoURL);
 
-        let a = document.createElement("a");
-        a.href = videoURL;
-        a.download = "myVideo.mp4";
-        a.click();
+        if (db) {
+            let videoId = uid();
+            let dbTransaction = db.transaction("video", "readwrite");
+            let videoStore = dbTransaction.objectStore("video");
+            let videoEntry = {
+                id: videoId,
+                blobData: blob,
+            };
+            let addRequest = videoStore.add(videoEntry);
+            addRequest.onsuccess = function () {
+                console.log("videoEntry added to the videoStore", addRequest.result);
+            };
+        }
+        // let a = document.createElement("a");
+        // a.href = videoURL;
+        // a.download = "myVideo.mp4";
+        // a.click();
     });
 })
 
@@ -98,11 +113,29 @@ captureBtnCont.addEventListener("click", () => {
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     context.fillStyle = filterColor;
     context.fillRect(0, 0, canvas.width, canvas.height);
-    let image = canvas.toDataURL("image/jpeg");
-    let a = document.createElement("a");
-    a.href = image;
-    a.download = "myPic.jpeg";
-    a.click();
+    let imageURL = canvas.toDataURL("image/jpeg");
+
+    if (db) {
+        let imageId = uid();
+        let dbTransaction = db.transaction("image", "readwrite");
+        let imageStore = dbTransaction.objectStore("image");
+        let imageEntry = {
+            id: imageId,
+            url: imageURL,
+        };
+        let addRequest = imageStore.add(imageEntry, imageId);
+        addRequest.onsuccess = function () {
+            console.log("imageEntry added to the imageStore", addRequest.result);
+        }
+        addRequest.onerror = function () {
+            console.error("imageEntry not added to the imageStore", addRequest.error);
+        }
+    }
+
+    // let a = document.createElement("a");
+    // a.href = image;
+    // a.download = "myPic.jpeg";
+    // a.click();
 
     setTimeout(() => {
         captureBtn.classList.remove("scale-capture")
@@ -118,3 +151,7 @@ allFilters.forEach((filterEle) => {
         filterLayer.style.backgroundColor = filterColor;
     });
 });
+
+gallery.addEventListener("click", () => {
+    location.assign("./gallery.html");
+})
