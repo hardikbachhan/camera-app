@@ -38,6 +38,8 @@ h1 {
 .gallery-cont {
     height: auto;
     width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .media-cont {

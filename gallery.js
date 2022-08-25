@@ -89,10 +89,10 @@ function deleteListener(e) {
     if (mediaType == "img") {
         let imageDBTransaction = db.transaction("image", "readwrite");
         let imageStore = imageDBTransaction.objectStore("image");
-        imageStore.delete(id);
+        imageStore.delete(id.split("-")[1]);
     } else {
-        let videoDBTransaction = db.transaction("image", "readwrite");
-        let videoStore = videoDBTransaction.objectStore("image");
+        let videoDBTransaction = db.transaction("video", "readwrite");
+        let videoStore = videoDBTransaction.objectStore("video");
         videoStore.delete(id);
     }
     // delete from frontend
