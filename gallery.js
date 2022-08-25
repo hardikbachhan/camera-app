@@ -115,6 +115,7 @@ function downloadListener(e) {
             a.href = imageURL;
             a.download = `img-${id}`;
             a.click();
+            a.remove();
         }
     } else {
         let videoDBTransaction = db.transaction("video", "readonly");
@@ -127,6 +128,7 @@ function downloadListener(e) {
             a.href = videoURL;
             a.download = `video-${id}`;
             a.click();
+            a.remove();
         }
     }
 }
