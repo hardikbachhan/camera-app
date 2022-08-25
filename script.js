@@ -34,7 +34,7 @@ navigator.mediaDevices.getUserMedia(constraints)
         let blob = new Blob(chunks, {type: "video/mp4"});
         console.log("rec-stopped");
         let videoURL = URL.createObjectURL(blob);
-        console.log(videoURL);
+        // console.log(videoURL);
 
         if (db) {
             let videoId = uid();
@@ -44,7 +44,7 @@ navigator.mediaDevices.getUserMedia(constraints)
                 id: videoId,
                 blobData: blob,
             };
-            let addRequest = videoStore.add(videoEntry);
+            let addRequest = videoStore.add(videoEntry, videoId);
             addRequest.onsuccess = function () {
                 console.log("videoEntry added to the videoStore", addRequest.result);
             };
@@ -120,7 +120,7 @@ captureBtnCont.addEventListener("click", () => {
         let dbTransaction = db.transaction("image", "readwrite");
         let imageStore = dbTransaction.objectStore("image");
         let imageEntry = {
-            id: imageId,
+            id: `img-${imageId}`,
             url: imageURL,
         };
         let addRequest = imageStore.add(imageEntry, imageId);
