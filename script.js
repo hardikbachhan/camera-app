@@ -21,13 +21,14 @@ navigator.mediaDevices.getUserMedia(constraints)
     video.srcObject = stream;
     mediaRecorder = new MediaRecorder(stream);
     mediaRecorder.addEventListener("start", () => {
-        console.log("rec-started");
+        chunks = [];
+        // console.log("rec-started");
     });
     // 11s, timeslice -> 2s, chunks = [0-2, 2-4, 4-6, 6-8, 8-10, 10-11]
     mediaRecorder.addEventListener("dataavailable", (e) => {
         chunks.push(e.data);
         // single blob of video created
-        console.log("rec started");
+        // console.log("rec started");
 
     });
     mediaRecorder.addEventListener("stop", () => {

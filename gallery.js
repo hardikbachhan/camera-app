@@ -121,7 +121,7 @@ function downloadListener(e) {
         let videoDBTransaction = db.transaction("video", "readonly");
         let videoStore = videoDBTransaction.objectStore("video");
         let videoRequest = videoStore.get(id.split("-")[0]);
-        console.log(videoRequest);
+        // console.log(videoRequest);
         videoRequest.onsuccess = () => {
             let videoURL = URL.createObjectURL(videoRequest.result.blobData);
             let a = document.createElement("a");
